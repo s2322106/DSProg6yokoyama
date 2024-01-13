@@ -32,8 +32,6 @@ for txt, money in zip(txt_(url),txt_money(url)):
   outcome = txt, money
   expense.append(outcome)
 
-print(expense)
-
 import sqlite3
 path = '/Users/hiro/assignment/DSpfinal/DSProg6yokoyama'
 db_name = 'tests.sqlite'
@@ -43,7 +41,7 @@ con = sqlite3.connect(path + db_name)
 #SQLを取得するためのオブジェクト取得
 cur = con.cursor()
 
-sql_create_table_money = 'CREATE TABLE average_moneys(name int, money int);'
+sql_create_table_money = 'CREATE TABLE average_money(name int, money int);'
 
 cur.execute(sql_create_table_money)
 #DBの接続を閉じる
@@ -52,7 +50,7 @@ con = sqlite3.connect(path + db_name)
 
 cur = con.cursor()
 
-sql_insert_many = "INSERT INTO average_moneys VALUES (?, ?)"
+sql_insert_many = "INSERT INTO average_money VALUES (?, ?)"
 
 cur.executemany(sql_insert_many, expense)
 
