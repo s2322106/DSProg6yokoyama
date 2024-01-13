@@ -35,7 +35,7 @@ for txt, money in zip(txt_(url),txt_money(url)):
 print(expense)
 
 import sqlite3
-path = '/content/'
+path = '/Users/hiro/assignment/DSpfinal/DSProg6yokoyama'
 db_name = 'tests.sqlite'
 #DBに接続
 con = sqlite3.connect(path + db_name)
