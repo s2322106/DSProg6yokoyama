@@ -32,6 +32,7 @@ for txt, money in zip(txt_(url),txt_money(url)):
   outcome = txt, money
   expense.append(outcome)
 
+##スクレイピングデータを保存
 import sqlite3
 path = '/Users/hiro/assignment/DSpfinal/DSProg6yokoyama'
 db_name = 'tests.sqlite'
@@ -50,7 +51,7 @@ con = sqlite3.connect(path + db_name)
 
 cur = con.cursor()
 
-sql_insert_many = "INSERT INTO average_money VALUES (?, ?)"
+sql_insert_many = "INSERT INTO average_moneys VALUES (?, ?)"
 
 cur.executemany(sql_insert_many, expense)
 
@@ -58,15 +59,42 @@ con.commit()
 
 con.close()
 
+##ローカルデータを保存
+path = '/Users/hiro/assignment/DSpfinal/DSProg6yokoyama'
+db_name = 'mydata.sqlite'
+
+con = sqlite3.connect(path + db_name)
+
+cur = con.cursor()
+sql_create_table_mydata = 'CREATE TABLE my_money(name text, money int);'
+cur.execute(sql_create_table_mydata)
+con.close()
+
 con = sqlite3.connect(path + db_name)
 
 cur = con.cursor()
 
-sql_select = 'SELECT * FROM average_moneys'
+sql_insert_mydata = 'INSERT INTO my_money VALUES (?,?)'
 
-cur.execute(sql_select)
+mydata_list  = [
+    ('居住費', 0),
+    ('食費', 14959),
+    ('交通費', 3653),
+    ('教養娯楽費', 7877),
+    ('書籍費', 1020),
+    ('勉学費', 0),
+    ('日常費', 137),
+    ('電話代', 0),
+    ('その他', 0),
+    ('貯金・繰越金', 0),
+    ('支出合計', 27646)
+]
 
-for i in cur:
-  print(i)
+cur.executemany(sql_insert_mydata, mydata_list)
+
+con.commit()
 
 con.close()
+
+
+
