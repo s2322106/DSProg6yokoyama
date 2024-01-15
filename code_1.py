@@ -23,7 +23,7 @@ def txt_money(url) :
   money_data = []
   texts = html_soup.find_all("td", limit=11)
   for text in texts :
-    text = text.get_text()
+    text = re.sub(r"[円,]", "", text.get_text())
     money_data.append(text)
   return money_data
 
@@ -34,15 +34,15 @@ for txt, money in zip(txt_(url),txt_money(url)):
 
 ##スクレイピングデータを保存
 import sqlite3
-path = '/Users/hiro/assignment/DSpfinal/DSProg6yokoyama'
-db_name = 'tests.sqlite'
+path = '/Users/hiro/assignment/DSpfinal/DSProg6yokoyama/'
+db_name = 'tests.db'
 #DBに接続
 con = sqlite3.connect(path + db_name)
 
 #SQLを取得するためのオブジェクト取得
 cur = con.cursor()
 
-sql_create_table_money = 'CREATE TABLE average_money(name int, money int);'
+sql_create_table_money = 'CREATE TABLE average_moneys(name int, money int);'
 
 cur.execute(sql_create_table_money)
 #DBの接続を閉じる
@@ -60,8 +60,8 @@ con.commit()
 con.close()
 
 ##ローカルデータを保存
-path = '/Users/hiro/assignment/DSpfinal/DSProg6yokoyama'
-db_name = 'mydata.sqlite'
+path = '/Users/hiro/assignment/DSpfinal/DSProg6yokoyama/'
+db_name = 'mydata.db'
 
 con = sqlite3.connect(path + db_name)
 
