@@ -96,5 +96,3 @@ con.commit()
 
 con.close()
 
-
-
